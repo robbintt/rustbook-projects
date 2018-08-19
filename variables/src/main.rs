@@ -57,9 +57,9 @@ fn main() {
     // ''' thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:56:17 ''' 
     //  so this is 'safe mode' and this memory cannot be accessed
     //  i assume if you run in unsafe mode then you can access this memory...
-    let ten = 10;
-    let tenth = array_a[ten];
+    //let ten = 10;
+    //let tenth = array_a[ten];
 
-    println!("Tenth element of array_a: {}", tenth);
+    //println!("Tenth element of array_a: {}", tenth);
 
 }
