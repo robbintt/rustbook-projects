@@ -8,16 +8,32 @@ fn main() {
 
     let mut pascal_triangle: Vec<Vec<isize>> = vec![];
 
-    // never exists as this_row in this implementation
-    pascal_triangle.push(last_row.clone());
 
     while row < size {
 
-        //println!("last_row: {:?}", last_row);
+        pascal_triangle.push(last_row);
+        last_row = this_row;
+        this_row = Vec::new();
+        // no matter what we need to initialize 1 vec per row of the triangle
+        //
+        // i think you can do this by adding the vector to the pascal_triangle
+        // vector of vectors, then using drain from old to triangle and from
+        // new to old....
+        // 
+        // the method i selected passes each Vec along instead
+        // then initializes a new Vec at the tip of generation
+        // i think this is the best method
+        //
+        // assuming we don't have to store the triangle, we then would
+        // not need to initialize a vec...
 
-        // how can i pass it instead of clone/clear
-        last_row = this_row.clone();
-        this_row.clear();
+        // this method used clone/clear which seems fine too
+        // it still only creates one object.
+        // i don't know how costly clone is compared to making
+        // a new empty Vec
+        //
+        //last_row = this_row.clone();
+        //this_row.clear();
         
         // initialize this_row
         this_row.push(1);
@@ -33,15 +49,13 @@ fn main() {
         // finalize this_row
         this_row.push(1);
 
-        // i need to clone here since i pass this_row to last_row
-        pascal_triangle.push(this_row.clone());
-
         row = row + 1;
-        //println!("row number: {}", row);
-
     }
 
-    //println!("this_row: {:?}", this_row);
+    // push the last objects
+    pascal_triangle.push(last_row);
+    pascal_triangle.push(this_row);
+
     println!("{:?}", pascal_triangle);
 
 }
