@@ -1,60 +1,55 @@
+/*
+ * I fixed this to pull values off pascal_triangle for constructing the next row.
+ * However, now I'm unwrapping the Option instead of handling the None case, which is unsafe.
+ * Also, it's super verbose to unwrap the last three times, and i'd rather alias it once, then
+ * work with it inside the loop.
+ */
+
 fn main() {
 
     let mut row = 1;
     let size = 10;
 
-    let mut last_row: Vec<isize> = vec![1];
-    let mut this_row: Vec<isize> = vec![1, 1];
-
     let mut pascal_triangle: Vec<Vec<isize>> = vec![];
 
 
+    pascal_triangle.push(vec![1]);
+    pascal_triangle.push(vec![1, 1]);
+
     while row < size {
 
-        pascal_triangle.push(last_row);
-        last_row = this_row;
-        this_row = Vec::new();
-        // no matter what we need to initialize 1 vec per row of the triangle
-        //
-        // i think you can do this by adding the vector to the pascal_triangle
-        // vector of vectors, then using drain from old to triangle and from
-        // new to old....
-        // 
-        // the method i selected passes each Vec along instead
-        // then initializes a new Vec at the tip of generation
-        // i think this is the best method
-        //
-        // assuming we don't have to store the triangle, we then would
-        // not need to initialize a vec...
+        let mut this_row = Vec::new();
 
-        // this method used clone/clear which seems fine too
-        // it still only creates one object.
-        // i don't know how costly clone is compared to making
-        // a new empty Vec
-        //
-        //last_row = this_row.clone();
-        //this_row.clear();
-        
+        // unwrap the Option
+        // technically I can unwrap the Some() but I should actually handle the None case instead?
+        println!("{}", pascal_triangle.last().unwrap().len());
+
         // initialize this_row
+        // ideally i would toss this right on pascal_triangle and be able to directly access
+        // the second to last element of pascal_triangle as well.
         this_row.push(1);
 
         // construct a new this_row from last_row's sums
         let mut i = 0;
-        // if the vec has 5 elements, we want to grab addresses 3, 4 at max.
-        while i+2 <= last_row.len() {
-            this_row.push(&last_row[i]+&last_row[i+1]);
+        // if the vec has 5 elements, we want to grab up to indexes (3, 4) 
+        while i+2 <= pascal_triangle.last().unwrap().len() {
+            this_row.push(&pascal_triangle.last().unwrap()[i]+&pascal_triangle.last().unwrap()[i+1]);
             i = i+1;
         }
 
         // finalize this_row
         this_row.push(1);
 
+        pascal_triangle.push(this_row);
         row = row + 1;
+
+        // this is initalized outside the loop but i think it can go inside now...
+        //this_row = Vec::new();
+        
     }
 
     // push the last objects
-    pascal_triangle.push(last_row);
-    pascal_triangle.push(this_row);
+    //pascal_triangle.push(this_row);
 
     println!("{:?}", pascal_triangle);
 
