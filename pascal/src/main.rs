@@ -10,19 +10,14 @@ fn main() {
     let mut row = 1;
     let size = 10;
 
-    let mut pascal_triangle: Vec<Vec<isize>> = vec![];
+    let mut pascal_triangle: Vec<Vec<isize>> = Vec::new();
 
 
     pascal_triangle.push(vec![1]);
-    pascal_triangle.push(vec![1, 1]);
 
-    while row < size {
+    while row <= size {
 
         let mut this_row = Vec::new();
-
-        // unwrap the Option
-        // technically I can unwrap the Some() but I should actually handle the None case instead?
-        println!("{}", pascal_triangle.last().unwrap().len());
 
         // initialize this_row
         // ideally i would toss this right on pascal_triangle and be able to directly access
@@ -42,15 +37,12 @@ fn main() {
 
         pascal_triangle.push(this_row);
         row = row + 1;
-
-        // this is initalized outside the loop but i think it can go inside now...
-        //this_row = Vec::new();
-        
     }
 
-    // push the last objects
-    //pascal_triangle.push(this_row);
-
-    println!("{:?}", pascal_triangle);
+    // display the triangle
+    for row in pascal_triangle {
+        println!("{:?}", row);
+    }
+    //println!("{:?}", pascal_triangle);
 
 }
