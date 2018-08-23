@@ -38,4 +38,9 @@ fn main() {
         //"six"
     };
     println!("The value of the number is: {}", number);
+
+    loop {
+        println!("again!");
+        break; // without this, you need to break or ctrl-c to get out of a `loop`
+    }
 }
