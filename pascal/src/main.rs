@@ -3,9 +3,18 @@
  * However, now I'm unwrapping the Option instead of handling the None case, which is unsafe.
  * Also, it's super verbose to unwrap the last three times, and i'd rather alias it once, then
  * work with it inside the loop.
+ *
+ * Some other ideas:
+ *  - write a recursive function to deliver the nth row of pascal's triangle
  */
 
 fn main() {
+
+    full_triangle();
+
+}
+
+fn full_triangle () {
 
     let mut row = 1;
     let size = 10;
@@ -52,3 +61,5 @@ fn main() {
     }
 
 }
+
+
